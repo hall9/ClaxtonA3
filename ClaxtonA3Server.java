@@ -223,7 +223,7 @@ public class ClaxtonA3Server
     /**
      * Constructs a new NtpMessage from an array of bytes.
      */
-    public ThomasClaxtonServerA2S15(byte[] array)
+    public ClaxtonA3Server(byte[] array)
     {
 	// See the packet format diagram in RFC 2030 for details 
 	leapIndicator = (byte) ((array[0] >> 6) & 0x3);
@@ -260,7 +260,7 @@ public class ClaxtonA3Server
      * Constructs a new NtpMessage in client -> server mode, and sets the
      * transmit timestamp to the current time.
      */
-    public ThomasClaxtonServerA2S15()
+    public ClaxtonA3Server()
     {
 	// Note that all the other member variables are already set with
 	// appropriate default values.
