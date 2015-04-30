@@ -31,7 +31,7 @@ import java.util.*;
  *  
  * @author Adam Buckley
  */
-public class ThomasClaxtonClientA2S15
+public class ClaxtonA3Client
 {
     public static void main(String[] args) throws IOException
     {

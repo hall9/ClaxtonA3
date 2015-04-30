@@ -56,7 +56,7 @@ import java.util.Date;
  * 
  * @author Adam Buckley
  */
-public class ThomasClaxtonServerA2S15
+public class ClaxtonA3Server
 {
     /**
      * This is a two-bit code warning of an impending leap second to be
