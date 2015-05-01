@@ -37,7 +37,7 @@ public class ClaxtonA3Server {
         }else if(selection == 2) {
             System.out.println("Connecting Localhost Server now...");
             System.out.println("Request viewable in server output Stream! Not here!");
-            httpRequest("0.0.0.0", 12337, w);
+            httpRequest("0.0.0.0", 33445, w);
         }
     }
     
