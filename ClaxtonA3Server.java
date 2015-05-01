@@ -30,6 +30,7 @@ public class ClaxtonA3Server {
         //Compute shortest node path.
         //Print Router Tables
         //Print Shortest Path
+        //this is printed as time T1
             httpRequest("0.0.0.0", 33445);
         }
         else if(option == 2) {
@@ -40,9 +41,10 @@ public class ClaxtonA3Server {
                 //Compute shortest node path.
                 //Print Each table
         //Print Shortest Path
+        //this is printed as time T2
         }
 
-        //Print total time taken
+        //Print total time taken, 
     }
     
     public static void httpRequest(String w, int p) throws Exception {
