@@ -24,7 +24,8 @@ public class ClaxtonA3Server {
         //Populate tables
 
         if(option == 1) {
-        //OPEN TCP
+        //OPEN TCP and start keeping track of time
+
         //Request DVR Data from client (reading frist number of messages)
         //Update Routing Table
         //Compute shortest node path.
@@ -35,7 +36,7 @@ public class ClaxtonA3Server {
         }
         else if(option == 2) {
         //Creat treads
-            //Open TCP
+            //Open TCP and start keeping track of time
                 //Request DVR Data from client
             //Update Routing Table
                 //Compute shortest node path.
