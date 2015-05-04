@@ -7,6 +7,14 @@
 import java.util.*;
 import java.io.*;
 import java.net.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 
 public class ClaxtonA3Server {
 
@@ -17,52 +25,125 @@ public class ClaxtonA3Server {
         Scanner console = new Scanner(System.in);
         System.out.println("Option 1: ");
         System.out.println("Option 2: ");
+        System.out.print("Option= ");
         int option = console.nextInt();
 
-        //Create Table
         //Read from WT.txt for starting node
-        //Populate tables
+        Node WT = readWTFile();
 
         if(option == 1) {
-        //OPEN TCP and start keeping track of time
-
+        //OPEN TCP and start keeping track of time (T1)
         //Request DVR Data from client (reading frist number of messages)
+
+        ArrayList<Node> nodeList = WT.getNodes();
+
+        Node DVR1 = nodeList.get(0);
+        DVR1.addNode(new Node(3,3));
+        DVR1.addNode(new Node(6,8));
+        DVR1.addNode(new Node(5,6));
+
+        Node DVR2 = nodeList.get(1);
+        DVR2.addNode(new Node(3,11));
+        DVR2.addNode(new Node(7,3));
+
+        Node DVR3 = nodeList.get(2);
+        DVR3.addNode(new Node(3,2));
+        DVR3.addNode(new Node(2,8));
+        DVR3.addNode(new Node(7,5));
+
+        createTable(WT, nodeList.get(0));
+        createTable(WT, nodeList.get(1));
+        createTable(WT, nodeList.get(2));
+
+
+
         //Update Routing Table
         //Compute shortest node path.
         //Print Router Tables
         //Print Shortest Path
-        //this is printed as time T1
-            httpRequest("0.0.0.0", 33445);
+
+
+            //httpRequest("0.0.0.0", 33445);
         }
         else if(option == 2) {
         //Creat treads
-            //Open TCP and start keeping track of time
+            //Open TCP and start keeping track of time (T2)
                 //Request DVR Data from client
             //Update Routing Table
                 //Compute shortest node path.
                 //Print Each table
         //Print Shortest Path
-        //this is printed as time T2
         }
 
-        //Print total time taken, 
+        //Print total time taken (T1 or T2)
     }
     
-    public static void httpRequest(String w, int p) throws Exception {
-            Socket socket = new Socket(w, p); //connects
-            PrintStream out = new PrintStream(socket.getOutputStream());
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out.println(message);
-            out.println();
-            String line = in.readLine();
-            while( line != null )
-            {
-                System.out.println( line );
-                line = in.readLine();
+    public static void httpRequest(String w, int p) {
+            
+    } 
+
+    private static void createTable(Node base, Node root) {
+
+        String table = "=====\n";
+        table += "D N D\n";
+        table += base.location + " 0 0";
+        table += "\n" + root.location + " " + root.location + " " + root.weight;
+
+        ArrayList<Node> nodeList = root.getNodes();
+        for(int i = 0; i<nodeList.size(); i++) {
+            table += "\n" + nodeList.get(i).location + " " + root.location + " " + nodeList.get(i).weight;
+        }
+
+       System.out.println(table); 
+    }
+
+    private static void shortestPath(Node base, Node root) {
+
+
+
+    }
+
+    private static Node readWTFile () throws IOException {
+        BufferedReader br = null;
+        Scanner s = null;
+
+        Node WT = null;
+
+        try {
+            br = new BufferedReader(new FileReader("WT.txt"));
+            s = new Scanner(br);
+
+            WT = new Node(s.nextInt(),s.nextInt());
+
+            while(s.hasNextInt()) {
+                WT.addNode(new Node(s.nextInt(),s.nextInt()));
             }
 
-            in.close();
-            out.close();
-            socket.close();
-    }  
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return WT;
+    }
+
+
+static class Node{
+    public int location;
+    public int weight;
+    private ArrayList<Node> nodeList;
+
+    public Node(int location, int weight) {
+        this.location = location;
+        this.weight = weight;
+        nodeList = new ArrayList<Node>();
+    }
+
+    public void addNode(Node node) {
+        nodeList.add(node);
+    }
+
+    public ArrayList<Node> getNodes() {
+        return nodeList;
+    }
+}
 }
