@@ -6,22 +6,20 @@ import java.net.*;
 class ClaxtonA3Client {
 
   public static void main(String argv[]) throws Exception {
-    String clientSentence;
-    //ServerSocket serverSocket = new ServerSocket(33445);
+    ServerSocket serverSocket = new ServerSocket(33445);
 
     ArrayList DVR = readDVRFile();
 
     while (true) {
         Socket connectionSocket = serverSocket.accept();
-        PrintWriter out = new PrintWriter(connectionSocket.getOutputStream(), true);
+        PrintStream out = new PrintStream(connectionSocket.getOutputStream());
 
         for(int i = 0; i<DVR.size(); i++) {
             out.println(DVR.get(i));
-            System.out.plrintln(Sent Data: " " + DVR.get(i));
+            System.out.println("Sent Data: " + DVR.get(i));
         }
 
-  //   BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-  //   clientSentence = inFromClient.readLine();
+       connectionSocket.close(); 
   }
 }
 
@@ -36,8 +34,9 @@ class ClaxtonA3Client {
             s = new Scanner(br);
 
             int numberOfNodes = s.nextInt();
+            String dumbline = s.nextLine();
 
-            for (int i=0; i<=numberOfNodes; i++) {
+            for (int i=0; i<numberOfNodes; i++) {
                 String newNode = s.nextLine();
                 DVR.add(newNode);
             }

@@ -37,23 +37,9 @@ public class ClaxtonA3Server {
 
         ArrayList<Node> nodeList = WT.getNodes();
 
-        Node DVR1 = nodeList.get(0);
-        DVR1.addNode(new Node(3,3));
-        DVR1.addNode(new Node(6,8));
-        DVR1.addNode(new Node(5,6));
-
-        Node DVR2 = nodeList.get(1);
-        DVR2.addNode(new Node(3,11));
-        DVR2.addNode(new Node(7,3));
-
-        Node DVR3 = nodeList.get(2);
-        DVR3.addNode(new Node(3,2));
-        DVR3.addNode(new Node(2,8));
-        DVR3.addNode(new Node(7,5));
-
-        createTable(WT, nodeList.get(0));
-        createTable(WT, nodeList.get(1));
-        createTable(WT, nodeList.get(2));
+        //createTable(WT, nodeList.get(0));
+        //createTable(WT, nodeList.get(1));
+        //createTable(WT, nodeList.get(2));
 
 
 
@@ -62,8 +48,7 @@ public class ClaxtonA3Server {
         //Print Router Tables
         //Print Shortest Path
 
-
-            //httpRequest("0.0.0.0", 33445);
+            httpRequest("0.0.0.0", 33445, WT);
         }
         else if(option == 2) {
         //Creat treads
@@ -78,16 +63,32 @@ public class ClaxtonA3Server {
         //Print total time taken (T1 or T2)
     }
     
-    public static void httpRequest(String w, int p) {
-            
+    public static void httpRequest(String w, int p, Node base) throws Exception {
+        Socket socket = new Socket(w,p);
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+        Scanner s = new Scanner (in);
+        //System.out.println(in.readLine());
+
+        while (s.hasNextLine()) {
+            Scanner line = new Scanner(s.nextLine());
+
+            Node newNode = new Node(line.nextInt(), line.nextInt());
+
+            while(line.hasNextInt()) {
+                newNode.addNode(new Node(line.nextInt(), line.nextInt()));
+            }
+
+            printTable(base, newNode);
+        }
     } 
 
-    private static void createTable(Node base, Node root) {
+    private static void printTable(Node base, Node root) {
 
         String table = "=====\n";
         table += "D N D\n";
         table += base.location + " 0 0";
-        table += "\n" + root.location + " " + root.location + " " + root.weight;
+        //table += "\n" + root.location + " " + root.location + " " + root.weight;
 
         ArrayList<Node> nodeList = root.getNodes();
         for(int i = 0; i<nodeList.size(); i++) {
